@@ -14,7 +14,7 @@ const Home: NextPage = () => {
       <Head>
         <title>tinySlug</title>
         <meta name="description" content="url shortener" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/slug.svg" />
       </Head>
       <MainLayout>
         <h1 className="text-center text-3xl font-semibold text-zinc-50">
