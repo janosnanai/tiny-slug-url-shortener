@@ -38,7 +38,7 @@ const UserDashboardPage: NextPage = () => {
       <div className="mx-auto my-3 w-max">
         <button
           onClick={handleCreateLinkOpen}
-          className="rounded-lg border-2 border-pink-600 bg-pink-600 px-5 py-2 text-center text-lg font-semibold uppercase text-pink-100 transition duration-300 ease-out hover:bg-zinc-1000"
+          className="rounded-lg border-2 border-pink-600 bg-pink-600 px-5 py-2 text-center text-lg font-semibold uppercase text-pink-100 transition duration-300 ease-out hover:bg-transparent"
         >
           create new link
         </button>

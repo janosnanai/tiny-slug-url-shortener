@@ -56,7 +56,7 @@ const Home: NextPage = () => {
             </p>
             <Link
               href={`/user-dashboard`}
-              className="group relative mx-auto mt-5 block w-max rounded-lg border-2 border-pink-600 bg-pink-600 px-5 py-2 text-center text-lg font-semibold uppercase text-pink-100 transition duration-300 ease-out hover:bg-zinc-1000"
+              className="group relative mx-auto mt-5 block w-max rounded-lg border-2 border-pink-600 bg-pink-600 px-5 py-2 text-center text-lg font-semibold uppercase text-pink-100 transition duration-300 ease-out hover:bg-transparent"
             >
               <div className="flex items-center justify-between gap-2">
                 <span>get started</span>

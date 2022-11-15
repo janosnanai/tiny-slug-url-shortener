@@ -61,7 +61,7 @@ function FormModal({
   return (
     <Dialog open={isOpen} onClose={onClose} as="div" className="relative z-10">
       <div className="fixed inset-0 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
-        <Dialog.Panel className="w-full max-w-xl overflow-y-auto rounded-lg border border-zinc-800 bg-zinc-900 p-4 shadow-lg">
+        <Dialog.Panel className="w-full max-w-md overflow-y-auto rounded-lg bg-zinc-900 p-4 shadow-lg">
           <div className="mb-5 flex justify-between">
             <Dialog.Title className="text-2xl uppercase text-zinc-100">
               {title}
@@ -89,7 +89,7 @@ function FormModal({
                 <button
                   type="button"
                   onClick={handleGenerate}
-                  className="w-full rounded-lg border-2 border-violet-500 p-2 text-center text-xl font-semibold uppercase text-violet-500"
+                  className="w-full rounded-lg border-2 border-violet-600 bg-black/25 p-2 text-center text-lg font-semibold uppercase text-violet-100 transition duration-300 hover:bg-violet-600"
                 >
                   generate
                 </button>
@@ -113,7 +113,7 @@ function FormModal({
               </div>
               <button
                 type="submit"
-                className="w-full rounded-lg border-2 border-violet-500 p-2 text-center text-xl font-semibold uppercase text-violet-500"
+                className="w-full rounded-lg border-2 border-pink-600 bg-pink-600 px-5 py-2 text-center text-lg font-semibold uppercase text-pink-100 transition duration-300 ease-out hover:bg-black/25"
               >
                 submit
               </button>

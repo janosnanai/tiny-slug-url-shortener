@@ -47,7 +47,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
               onClick={() => {
                 sessionData ? signOut() : signIn();
               }}
-              className="rounded-md px-3 py-1 text-sm uppercase text-zinc-100 transition-colors hover:text-violet-400"
+              className="rounded-md px-3 py-1 text-sm uppercase text-zinc-100 transition-colors hover:text-pink-600"
             >
               {sessionData ? "sign out" : "sign in"}
             </button>
