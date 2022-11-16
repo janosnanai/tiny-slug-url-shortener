@@ -9,6 +9,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { toast } from "react-hot-toast";
 
+import ButtonPrimary from "../ui/button-primary";
 import {
   qrCodeModalGetterAtom,
   qrCodeModalSetterAtom,
@@ -63,25 +64,21 @@ function QrCodeModal() {
           </div>
           {shortURL && originalURL ? (
             <div className="flex gap-5">
-              <div>
-                <div ref={canvasRef}>
+              <div className="flex flex-col items-center gap-3">
+                <div ref={canvasRef} className="rounded-lg bg-white p-3">
                   <QRCodeCanvas
                     id="qr-code"
                     value={shortURL}
                     height={256}
                     width={256}
-                    className="rounded-lg bg-white p-3"
                   />
                 </div>
-                <button
-                  onClick={handleDownload}
-                  className="mt-3 w-full rounded-lg border-2 border-violet-500 p-2 text-center text-sm font-semibold uppercase text-violet-500"
-                >
-                  <div className="flex justify-between">
-                    <ArrowDownTrayIcon className="h-5 w-5" />
+                <ButtonPrimary onClick={handleDownload}>
+                  <div className="flex items-center justify-between gap-2">
+                    <ArrowDownTrayIcon className="h-6 w-6" />
                     <span>download</span>
                   </div>
-                </button>
+                </ButtonPrimary>
               </div>
               <div className="flex grow flex-col gap-2">
                 <div className="grow rounded-lg border border-zinc-700 bg-zinc-1000 p-2 pt-1">

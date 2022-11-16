@@ -60,7 +60,7 @@ const Home: NextPage = () => {
             >
               <div className="flex items-center justify-between gap-2">
                 <span>get started</span>
-                <ArrowRightIcon className="h-5 w-5 transition-transform duration-300 ease-in-out group-hover:translate-x-2" />
+                <ArrowRightIcon className="h-6 w-6 transition-transform duration-300 ease-in-out group-hover:translate-x-2" />
               </div>
               <span className="absolute inset-0 h-full w-full animate-pulse rounded-lg bg-transparent shadow-[0_2px_17px_5px] shadow-pink-600/50 group-hover:animate-none" />
             </Link>

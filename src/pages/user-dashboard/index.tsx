@@ -3,6 +3,7 @@ import type { NextPage } from "next";
 import { useAtom } from "jotai";
 import { useEffect } from "react";
 
+import ButtonPrimary from "../../components/ui/button-primary";
 import MainLayout from "../../components/layouts/main.layout";
 import CreateLinkModal from "../../components/modals/create-link.modal";
 import UpdateLinkModal from "../../components/modals/update-link.modal";
@@ -36,12 +37,9 @@ const UserDashboardPage: NextPage = () => {
       <ConfirmDeleteModal />
       <QrCodeModal />
       <div className="mx-auto my-3 w-max">
-        <button
-          onClick={handleCreateLinkOpen}
-          className="rounded-lg border-2 border-pink-600 bg-pink-600 px-5 py-2 text-center text-lg font-semibold uppercase text-pink-100 transition duration-300 ease-out hover:bg-transparent"
-        >
+        <ButtonPrimary onClick={handleCreateLinkOpen}>
           create new link
-        </button>
+        </ButtonPrimary>
       </div>
       {queryData && (
         <ul className="space-y-3">

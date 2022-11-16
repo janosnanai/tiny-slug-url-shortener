@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
+import ButtonPrimary from "../ui/button-primary";
+import ButtonSecondary from "../ui/button-secondary";
 import { createLinkSchema } from "../../schema/link.schema";
 import { env } from "../../env/client.mjs";
 
@@ -86,13 +88,9 @@ function FormModal({
                   />
                 </div>
                 <p>{validationErrors.slug?.message}</p>
-                <button
-                  type="button"
-                  onClick={handleGenerate}
-                  className="w-full rounded-lg border-2 border-violet-600 bg-black/25 p-2 text-center text-lg font-semibold uppercase text-violet-100 transition duration-300 hover:bg-violet-600"
-                >
+                <ButtonSecondary onClick={handleGenerate} className="w-full">
                   generate
-                </button>
+                </ButtonSecondary>
               </div>
               <div>
                 <input
@@ -111,12 +109,9 @@ function FormModal({
                 />
                 <p>{validationErrors.description?.message}</p>
               </div>
-              <button
-                type="submit"
-                className="w-full rounded-lg border-2 border-pink-600 bg-pink-600 px-5 py-2 text-center text-lg font-semibold uppercase text-pink-100 transition duration-300 ease-out hover:bg-black/25"
-              >
+              <ButtonPrimary type="submit" className="w-full">
                 submit
-              </button>
+              </ButtonPrimary>
             </div>
           </form>
         </Dialog.Panel>
