@@ -35,26 +35,19 @@ function FormModal({
     handleSubmit,
     register,
     setValue,
+    reset,
     formState: { errors: validationErrors },
   } = useForm<CreateLinkInput>({
     mode: "onTouched",
     resolver: zodResolver(createLinkSchema),
+    defaultValues,
   });
 
   // Sync defaultvalues on open
   useEffect(() => {
     if (!isOpen) return;
-    let slug = "";
-    let url = "";
-    let description = "";
-
-    if (defaultValues) {
-      ({ slug, url, description } = defaultValues);
-    }
-    setValue("slug", slug);
-    setValue("url", url);
-    setValue("description", description);
-  }, [defaultValues, isOpen, setValue]);
+    reset(defaultValues);
+  }, [defaultValues, isOpen, reset]);
 
   function handleGenerate() {
     setValue("slug", nanoid(7), { shouldValidate: true });
