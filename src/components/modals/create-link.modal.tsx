@@ -36,6 +36,11 @@ function CreateLinkModal() {
         return err.toString();
       },
     });
+    try {
+      await mutationPromise;
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   return <FormModal title="create link" {...{ isOpen, onClose, onSubmit }} />;

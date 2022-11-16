@@ -36,7 +36,7 @@ function FormModal({
     register,
     setValue,
     reset,
-    formState: { errors: validationErrors },
+    formState: { errors: validationErrors, isSubmitting },
   } = useForm<CreateLinkInput>({
     mode: "onTouched",
     resolver: zodResolver(createLinkSchema),
@@ -75,6 +75,7 @@ function FormModal({
                   <div className="flex items-center">
                     <span className="text-lg text-zinc-400">{BASE_URL}</span>
                     <input
+                      disabled={isSubmitting}
                       autoComplete="off"
                       type="text"
                       placeholder="enter slug or generate one..."
@@ -90,12 +91,17 @@ function FormModal({
                     {validationErrors.slug?.message}
                   </p>
                 </div>
-                <ButtonSecondary onClick={handleGenerate} className="w-full">
+                <ButtonSecondary
+                  onClick={handleGenerate}
+                  className="w-full"
+                  disabled={isSubmitting}
+                >
                   generate
                 </ButtonSecondary>
               </div>
               <div>
                 <input
+                  disabled={isSubmitting}
                   autoComplete="off"
                   type="text"
                   placeholder="enter your url..."
@@ -110,6 +116,7 @@ function FormModal({
               </div>
               <div>
                 <textarea
+                  disabled={isSubmitting}
                   rows={5}
                   placeholder="enter description... (optional)"
                   {...register("description")}
@@ -119,7 +126,11 @@ function FormModal({
                   {validationErrors.description?.message}
                 </p>
               </div>
-              <ButtonPrimary type="submit" className="w-full">
+              <ButtonPrimary
+                type="submit"
+                className="w-full"
+                disabled={isSubmitting}
+              >
                 submit
               </ButtonPrimary>
             </div>

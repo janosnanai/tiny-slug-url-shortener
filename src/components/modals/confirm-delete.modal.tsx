@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useAtom } from "jotai";
@@ -15,6 +16,7 @@ function ConfirmDeleteModal() {
   const [modalState] = useAtom(deleteLinkGetterAtom);
   const [, setModalState] = useAtom(deleteLinkSetterAtom);
   const { isOpen, linkId } = modalState;
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const utils = trpc.useContext();
   const { mutateAsync } = trpc.link.delete.useMutation({
@@ -38,6 +40,12 @@ function ConfirmDeleteModal() {
         return err.toString();
       },
     });
+    setIsSubmitting(true);
+    mutationPromise
+      .catch((e) => {
+        console.log(e);
+      })
+      .then(() => setIsSubmitting(false));
   }
 
   return (
@@ -60,8 +68,12 @@ function ConfirmDeleteModal() {
             <p>Please confirm:</p>
           </div>
           <div className="flex flex-col gap-2">
-            <ButtonDanger onClick={onSubmit}>delete</ButtonDanger>
-            <ButtonPrimary onClick={onClose}>cancel</ButtonPrimary>
+            <ButtonDanger onClick={onSubmit} disabled={isSubmitting}>
+              delete
+            </ButtonDanger>
+            <ButtonPrimary onClick={onClose} disabled={isSubmitting}>
+              cancel
+            </ButtonPrimary>
           </div>
         </Dialog.Panel>
       </div>

@@ -27,7 +27,7 @@ function UpdateLinkModal() {
     setModalState({ isOpen: false });
   }
 
-  function onSubmit(values: CreateLinkInput) {
+  async function onSubmit(values: CreateLinkInput) {
     if (!linkId) return;
     const mutationPromise = mutateAsync({ id: linkId, update: values });
     toast.promise(mutationPromise, {
@@ -37,6 +37,11 @@ function UpdateLinkModal() {
         return err.toString();
       },
     });
+    try {
+      await mutationPromise;
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   return (
