@@ -55,9 +55,9 @@ function ShortLinkItem({ shortLink }: { shortLink: ShortLink }) {
   }
 
   return (
-    <li className="container mx-auto rounded-lg bg-zinc-900 p-3">
-      <div className="flex justify-between gap-3">
-        <p className="grow text-xl font-semibold text-zinc-100">
+    <li className="mx-auto rounded-lg bg-zinc-900 p-2 mobile-lg:p-3 sm:container">
+      <div className="flex items-start justify-between gap-1">
+        <p className="grow break-all text-base font-semibold text-zinc-100 mobile-lg:text-lg sm:text-xl">
           {shortLinkFull}
         </p>
         <ShortLinkMenu
@@ -67,13 +67,17 @@ function ShortLinkItem({ shortLink }: { shortLink: ShortLink }) {
           onDelete={handleDelete}
         />
       </div>
-      <p className="text-zinc-400">{shortLink.url}</p>
-      {shortLink.description && (
-        <p className="text-zinc-400">{shortLink.description}</p>
-      )}
-      {!shortLink.description && (
-        <p className="text-zinc-600">no description</p>
-      )}
+      <p className="mt-1 break-all text-xs text-violet-300 mobile-lg:text-sm sm:text-base">
+        {shortLink.url}
+      </p>
+      <div className="mt-3 break-words text-xs tracking-wide mobile-lg:text-sm sm:text-base">
+        {shortLink.description && (
+          <p className=" text-zinc-400">{shortLink.description}</p>
+        )}
+        {!shortLink.description && (
+          <p className="text-zinc-600">no description</p>
+        )}
+      </div>
     </li>
   );
 }

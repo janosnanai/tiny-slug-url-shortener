@@ -55,10 +55,10 @@ function FormModal({
 
   return (
     <Dialog open={isOpen} onClose={onClose} as="div" className="relative z-10">
-      <div className="fixed inset-0 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
-        <Dialog.Panel className="w-full max-w-md overflow-y-auto rounded-lg bg-zinc-900 p-4 shadow-lg">
-          <div className="mb-9 flex justify-between">
-            <Dialog.Title className="text-2xl uppercase text-zinc-100">
+      <div className="fixed inset-0 flex items-center justify-center bg-black/50 p-2 backdrop-blur-sm mobile-lg:p-4">
+        <Dialog.Panel className="w-full max-w-md overflow-y-auto rounded-lg bg-zinc-900 p-2 shadow-lg mobile-lg:p-4">
+          <div className=" mb-6 flex justify-between mobile-lg:mb-9">
+            <Dialog.Title className="text-xl uppercase text-zinc-100 mobile-lg:text-2xl">
               {title}
             </Dialog.Title>
             <button
@@ -72,7 +72,7 @@ function FormModal({
             <div className="space-y-9">
               <div className="space-y-1">
                 <div>
-                  <div className="flex items-center">
+                  <div className="flex w-full flex-col items-start mobile-lg:flex-row mobile-lg:items-center">
                     <span className="text-lg text-zinc-400">{BASE_URL}</span>
                     <input
                       disabled={isSubmitting}
@@ -80,7 +80,7 @@ function FormModal({
                       type="text"
                       placeholder="enter slug or generate one..."
                       {...register("slug")}
-                      className={`grow rounded-lg border bg-zinc-1000 px-2 py-1 text-zinc-100 ${
+                      className={`w-full grow rounded-lg border bg-zinc-1000 px-2 py-1 text-zinc-100 ${
                         validationErrors.slug
                           ? "border-red-500"
                           : "border-zinc-800"

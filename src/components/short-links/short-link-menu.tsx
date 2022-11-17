@@ -49,7 +49,7 @@ function ShortLinkMenu({
           top: y ?? 0,
           left: x ?? 0,
         }}
-        className="z-10 flex w-36 flex-col gap-1 rounded-lg border border-zinc-700 bg-zinc-800 p-1 shadow-lg"
+        className="z-10 flex w-32 flex-col gap-1 rounded-lg border border-zinc-700 bg-zinc-800 p-1 shadow-lg"
       >
         <MenuButton onClick={onCopy}>
           <div className="flex gap-2">
@@ -69,6 +69,7 @@ function ShortLinkMenu({
             <span>update</span>
           </div>
         </MenuButton>
+        <div className="h-0.5 rounded-full bg-white/30" />
         <MenuButton onClick={onDelete}>
           <div className="flex gap-2">
             <TrashIcon className="h-5 w-5" />

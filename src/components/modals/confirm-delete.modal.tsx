@@ -50,10 +50,10 @@ function ConfirmDeleteModal() {
 
   return (
     <Dialog open={isOpen} onClose={onClose} as="div" className="relative z-10">
-      <div className="fixed inset-0 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
-        <Dialog.Panel className="w-full max-w-sm overflow-y-auto rounded-lg bg-zinc-900 p-4 shadow-lg">
+      <div className="fixed inset-0 flex items-center justify-center bg-black/50 p-2 backdrop-blur-sm mobile-lg:p-4">
+        <Dialog.Panel className="w-full max-w-sm overflow-y-auto rounded-lg bg-zinc-900 p-3 shadow-lg mobile-lg:p-4">
           <div className="mb-5 flex justify-between">
-            <Dialog.Title className="text-2xl uppercase text-zinc-100">
+            <Dialog.Title className="text-xl uppercase text-zinc-100 mobile-lg:text-2xl">
               confirm delete
             </Dialog.Title>
             <button
@@ -63,7 +63,7 @@ function ConfirmDeleteModal() {
               <XMarkIcon className="h-8 w-8" />
             </button>
           </div>
-          <div className="mb-3 text-lg text-zinc-200">
+          <div className="mb-3 text-base text-zinc-200 mobile-lg:text-lg">
             <p>You are going to permanently remove this shortlink.</p>
             <p>Please confirm:</p>
           </div>

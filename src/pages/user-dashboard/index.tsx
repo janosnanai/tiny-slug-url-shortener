@@ -48,7 +48,7 @@ const UserDashboardPage: NextPage = () => {
       </div>
 
       {!isLoading && queryData && (
-        <ul className="space-y-3">
+        <ul className="mt-3 space-y-3 sm:mx-3 md:mx-12">
           {queryData.map((shortLink) => (
             <ShortLinkItem key={shortLink.id} shortLink={shortLink} />
           ))}
