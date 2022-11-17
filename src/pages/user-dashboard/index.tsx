@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 
 import { useAtom } from "jotai";
 import { useEffect } from "react";
+import { Oval } from "react-loader-spinner";
 
 import ButtonPrimary from "../../components/ui/button-primary";
 import MainLayout from "../../components/layouts/main.layout";
@@ -15,7 +16,11 @@ import { loadingSpinnerSetterAtom } from "../../utils/atoms/loading-spinner.atom
 import { trpc } from "../../utils/trpc";
 
 const UserDashboardPage: NextPage = () => {
-  const { data: queryData, isFetching } = trpc.link.getAll.useQuery();
+  const {
+    data: queryData,
+    isFetching,
+    isLoading,
+  } = trpc.link.getAll.useQuery();
   const [, setCreateLinkState] = useAtom(createLinkSetterAtom);
   const [, setSpinnerState] = useAtom(loadingSpinnerSetterAtom);
 
@@ -41,13 +46,27 @@ const UserDashboardPage: NextPage = () => {
           create new link
         </ButtonPrimary>
       </div>
-      {queryData && (
+
+      {!isLoading && queryData && (
         <ul className="space-y-3">
           {queryData.map((shortLink) => (
             <ShortLinkItem key={shortLink.id} shortLink={shortLink} />
           ))}
         </ul>
       )}
+
+      <div>
+        <Oval
+          visible={isLoading}
+          wrapperClass="justify-center mt-10"
+          strokeWidth={5}
+          height={72}
+          width={72}
+          color="#2dd4bf"
+          secondaryColor="#2dd4bf"
+          ariaLabel="oval-loading"
+        />
+      </div>
     </MainLayout>
   );
 };
