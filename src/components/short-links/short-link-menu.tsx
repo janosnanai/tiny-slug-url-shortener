@@ -51,31 +51,31 @@ function ShortLinkMenu({
         }}
         className="z-10 flex w-32 flex-col gap-1 rounded-lg border border-zinc-700 bg-zinc-800 p-1 shadow-lg"
       >
-        <MenuButton onClick={onCopy}>
+        <MenuItemButton onClick={onCopy}>
           <div className="flex gap-2">
             <ClipboardDocumentIcon className="h-5 w-5" />
             <span>copy url</span>
           </div>
-        </MenuButton>
-        <MenuButton onClick={onQrCode}>
+        </MenuItemButton>
+        <MenuItemButton onClick={onQrCode}>
           <div className="flex gap-2">
             <QrCodeIcon className="h-5 w-5" />
             <span>QR code</span>
           </div>
-        </MenuButton>
-        <MenuButton onClick={onUpdate}>
+        </MenuItemButton>
+        <MenuItemButton onClick={onUpdate}>
           <div className="flex gap-2">
             <PencilSquareIcon className="h-5 w-5" />
             <span>update</span>
           </div>
-        </MenuButton>
+        </MenuItemButton>
         <div className="h-0.5 rounded-full bg-white/30" />
-        <MenuButton onClick={onDelete}>
+        <MenuItemButton onClick={onDelete}>
           <div className="flex gap-2">
             <TrashIcon className="h-5 w-5" />
             <span>delete</span>
           </div>
-        </MenuButton>
+        </MenuItemButton>
       </Menu.Items>
     </Menu>
   );
@@ -83,12 +83,12 @@ function ShortLinkMenu({
 
 export default ShortLinkMenu;
 
-interface MenuButtonProps {
+interface MenuItemButtonProps {
   onClick?: () => void;
   children?: React.ReactNode;
 }
 
-function MenuButton({ onClick, children }: MenuButtonProps) {
+function MenuItemButton({ onClick, children }: MenuItemButtonProps) {
   return (
     <Menu.Item>
       {({ active }) => (
