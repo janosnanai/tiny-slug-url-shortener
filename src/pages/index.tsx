@@ -3,13 +3,16 @@ import type { NextPage } from "next";
 import Image from "next/image";
 import Head from "next/head";
 import Link from "next/link";
+import { signIn, useSession } from "next-auth/react";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 
+import ButtonPrimary from "../components/ui/button-primary";
 import MainLayout from "../components/layouts/main.layout";
 
 import garyPic from "../../public/gary.svg";
 
 const Home: NextPage = () => {
+  const { data: sessionData } = useSession();
   return (
     <>
       <Head>
@@ -57,16 +60,30 @@ const Home: NextPage = () => {
             <h2 className="max-w-[9rem] text-center text-xl font-semibold tracking-wide text-zinc-400 mobile-lg:max-w-[12rem] mobile-lg:text-2xl">
               Free, unlimited custom links & QR codes.
             </h2>
-            <Link
-              href={`/user-dashboard`}
-              className="group relative mx-auto mt-5 block w-max rounded-lg border-2 border-pink-600 bg-pink-600 px-3 py-1 text-center text-base font-semibold uppercase text-pink-100 transition duration-300 ease-out hover:bg-transparent mobile-lg:px-5 mobile-lg:py-2 mobile-lg:text-lg"
-            >
-              <div className="flex items-center justify-between gap-2">
-                <span>get started</span>
-                <ArrowRightIcon className="h-5 w-5 transition-transform duration-300 ease-in-out group-hover:translate-x-1.5 mobile-lg:h-6 mobile-lg:w-6 mobile-lg:group-hover:translate-x-2" />
-              </div>
-              <span className="absolute inset-0 h-full w-full animate-pulse rounded-lg bg-transparent shadow-[0_2px_17px_5px] shadow-pink-600/50 group-hover:animate-none" />
-            </Link>
+            {sessionData && (
+              <Link
+                href={`/user-dashboard`}
+                className="group relative mx-auto mt-5 block w-max rounded-lg border-2 border-pink-600 bg-pink-600 px-3 py-1 text-center text-base font-semibold uppercase text-pink-100 transition duration-300 ease-out hover:bg-transparent mobile-lg:px-5 mobile-lg:py-2 mobile-lg:text-lg"
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <span>get started</span>
+                  <ArrowRightIcon className="h-5 w-5 transition-transform duration-300 ease-in-out group-hover:translate-x-1.5 mobile-lg:h-6 mobile-lg:w-6 mobile-lg:group-hover:translate-x-2" />
+                </div>
+                <span className="absolute inset-0 h-full w-full animate-pulse rounded-lg bg-transparent shadow-[0_2px_17px_5px] shadow-pink-600/50 group-hover:animate-none" />
+              </Link>
+            )}
+            {!sessionData && (
+              <ButtonPrimary
+                className="group relative mx-auto mt-5 block w-max"
+                onClick={signIn}
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <span>sign in</span>
+                  <ArrowRightIcon className="h-5 w-5 transition-transform duration-300 ease-in-out group-hover:translate-x-1.5 mobile-lg:h-6 mobile-lg:w-6 mobile-lg:group-hover:translate-x-2" />
+                </div>
+                <span className="absolute inset-0 h-full w-full animate-pulse rounded-lg bg-transparent shadow-[0_2px_17px_5px] shadow-pink-600/50 group-hover:animate-none" />
+              </ButtonPrimary>
+            )}
           </div>
         </div>
       </MainLayout>
