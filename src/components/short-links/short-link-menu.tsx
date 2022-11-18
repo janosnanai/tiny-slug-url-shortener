@@ -40,7 +40,13 @@ function ShortLinkMenu({
         ref={reference}
         className="group rounded-full p-1 transition-colors hover:bg-white/10"
       >
-        <EllipsisVerticalIcon className="h-6 w-6 text-zinc-400 group-hover:text-zinc-100" />
+        {({ open }) => (
+          <EllipsisVerticalIcon
+            className={`h-6 w-6 ${
+              open ? "text-teal-300" : "text-zinc-400 group-hover:text-zinc-100"
+            }`}
+          />
+        )}
       </Menu.Button>
       <Menu.Items
         ref={floating}
