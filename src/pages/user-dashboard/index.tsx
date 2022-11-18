@@ -1,4 +1,8 @@
-import type { NextPage } from "next";
+import type {
+  NextPage,
+  GetServerSideProps,
+  GetServerSidePropsContext,
+} from "next";
 
 import { useAtom } from "jotai";
 import { useEffect } from "react";
@@ -15,6 +19,7 @@ import ShortLinkItem from "../../components/short-links/short-link-item";
 import { createLinkSetterAtom } from "../../utils/atoms/create-link.atom";
 import { loadingSpinnerSetterAtom } from "../../utils/atoms/loading-spinner.atom";
 import { trpc } from "../../utils/trpc";
+import { getServerAuthSession } from "../../server/common/get-server-auth-session";
 
 const UserDashboardPage: NextPage = () => {
   const {
@@ -79,3 +84,19 @@ const UserDashboardPage: NextPage = () => {
 };
 
 export default UserDashboardPage;
+
+export const getServerSideProps: GetServerSideProps = async (
+  ctx: GetServerSidePropsContext
+) => {
+  const session = await getServerAuthSession(ctx);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+  return { props: {} };
+};
