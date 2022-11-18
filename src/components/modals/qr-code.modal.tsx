@@ -52,7 +52,7 @@ function QrCodeModal() {
       <div className="fixed inset-0 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
         <Dialog.Panel className="w-full max-w-xl overflow-y-auto rounded-lg border border-zinc-800 bg-zinc-900 p-4 shadow-lg">
           <div className="mb-5 flex justify-between">
-            <Dialog.Title className="text-2xl uppercase text-zinc-100">
+            <Dialog.Title className="text-xl uppercase text-zinc-100 mobile-lg:text-2xl">
               QR code
             </Dialog.Title>
             <button
@@ -63,7 +63,7 @@ function QrCodeModal() {
             </button>
           </div>
           {shortURL && originalURL ? (
-            <div className="flex gap-5">
+            <div className="flex flex-col gap-5 sm:flex-row">
               <div className="flex flex-col items-center gap-3">
                 <div ref={canvasRef} className="rounded-lg bg-white p-3">
                   <QRCodeCanvas
@@ -91,11 +91,15 @@ function QrCodeModal() {
                       <ClipboardDocumentIcon />
                     </button>
                   </div>
-                  <p className="break-all text-zinc-100">{shortURL}</p>
+                  <p className="break-all text-sm text-zinc-100 mobile-md:text-base">
+                    {shortURL}
+                  </p>
                 </div>
                 <div className="grow p-2 pt-1">
                   <span className="text-zinc-500">original url</span>
-                  <p className="break-all text-zinc-100">{originalURL}</p>
+                  <p className="break-all text-sm text-zinc-100 mobile-md:text-base">
+                    {originalURL}
+                  </p>
                 </div>
               </div>
             </div>
