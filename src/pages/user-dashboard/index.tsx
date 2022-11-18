@@ -3,6 +3,7 @@ import type { NextPage } from "next";
 import { useAtom } from "jotai";
 import { useEffect } from "react";
 import { Oval } from "react-loader-spinner";
+import { toast } from "react-hot-toast";
 
 import ButtonPrimary from "../../components/ui/button-primary";
 import MainLayout from "../../components/layouts/main.layout";
@@ -20,6 +21,7 @@ const UserDashboardPage: NextPage = () => {
     data: queryData,
     isFetching,
     isLoading,
+    error,
   } = trpc.link.getAll.useQuery();
   const [, setCreateLinkState] = useAtom(createLinkSetterAtom);
   const [, setSpinnerState] = useAtom(loadingSpinnerSetterAtom);
@@ -34,6 +36,11 @@ const UserDashboardPage: NextPage = () => {
       setSpinnerState({ isLoading: false });
     };
   }, [isFetching, setSpinnerState]);
+
+  useEffect(() => {
+    if (!error) return;
+    toast.error(error.message);
+  }, [error]);
 
   return (
     <MainLayout>

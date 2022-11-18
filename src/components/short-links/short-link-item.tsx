@@ -24,7 +24,7 @@ function ShortLinkItem({ shortLink }: { shortLink: ShortLink }) {
       loading: "Copying URL to clipboard...",
       success: "URL copied to clipboard!",
       error: (err) => {
-        return err.toString();
+        return err.message || "unknown error";
       },
     });
   }

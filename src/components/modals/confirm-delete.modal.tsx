@@ -37,7 +37,7 @@ function ConfirmDeleteModal() {
       loading: "Deleting link...",
       success: "Link deleted!",
       error: (err) => {
-        return err.toString();
+        return err.message || "unknown error";
       },
     });
     setIsSubmitting(true);

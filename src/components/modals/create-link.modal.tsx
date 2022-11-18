@@ -33,7 +33,7 @@ function CreateLinkModal() {
       loading: "Creating link...",
       success: "Link created!",
       error: (err) => {
-        return err.toString();
+        return err.message || "unknown error";
       },
     });
     try {

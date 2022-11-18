@@ -34,7 +34,7 @@ function UpdateLinkModal() {
       loading: "Updating link...",
       success: "Link updated!",
       error: (err) => {
-        return err.toString();
+        return err.message || "unknown error";
       },
     });
     try {
