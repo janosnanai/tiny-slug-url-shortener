@@ -51,7 +51,9 @@ function NavbarMenu() {
             {!sessionData && <UserIcon className="h-6 w-6 text-zinc-200" />}
             <ChevronDownIcon
               className={`absolute bottom-0 right-0 h-3 w-3 rounded-full bg-zinc-900 transition-colors ${
-                open ? "text-teal-300" : "text-zinc-50"
+                open
+                  ? "text-teal-300"
+                  : "text-zinc-200 group-hover:text-zinc-50"
               }`}
             />
           </div>

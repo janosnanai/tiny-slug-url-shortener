@@ -25,17 +25,22 @@ function Navbar() {
       </div>
       <Link
         href="/"
-        className="ml-6 font-bold text-zinc-100 transition hover:text-pink-600"
+        className="ml-6 rounded-lg p-1 font-bold text-zinc-200 transition-colors hover:bg-white/10 hover:text-zinc-50"
       >
         <span>TSUS</span>
       </Link>
       <div className="flex items-center justify-between">
         <NavbarMenu />
         <div className="mx-3 h-full w-0.5 rounded-full bg-white/30"></div>
-        <Link href="/" className="group">
+        <Link
+          href="https://github.com/janosnanai/tiny-slug-url-shortener"
+          rel="noopener noreferrer"
+          target="_blank"
+          className="rounded-full p-1 text-zinc-200 transition-colors hover:bg-white/10 hover:text-zinc-50"
+        >
           <svg
             viewBox="0 0 16 16"
-            className="h-5 w-5 text-zinc-200 transition group-hover:text-pink-600"
+            className="h-6 w-6"
             fill="currentColor"
             aria-hidden="true"
           >
