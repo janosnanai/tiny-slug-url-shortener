@@ -19,7 +19,7 @@ function CreateLinkModal() {
   const { mutateAsync } = trpc.link.create.useMutation({
     onSuccess() {
       onClose();
-      utils.link.getAll.invalidate();
+      utils.link.getInfinite.invalidate();
     },
   });
 

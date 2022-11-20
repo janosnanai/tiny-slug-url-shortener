@@ -5,9 +5,10 @@ import type {
 } from "next";
 
 import { useAtom } from "jotai";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Oval } from "react-loader-spinner";
 import { toast } from "react-hot-toast";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
 import ButtonPrimary from "../../components/ui/button-primary";
 import MainLayout from "../../components/layouts/main.layout";
@@ -20,21 +21,30 @@ import { createLinkSetterAtom } from "../../utils/atoms/create-link.atom";
 import { loadingSpinnerSetterAtom } from "../../utils/atoms/loading-spinner.atom";
 import { trpc } from "../../utils/trpc";
 import { getServerAuthSession } from "../../server/common/get-server-auth-session";
+import ButtonSecondary from "../../components/ui/button-secondary";
 
 const UserDashboardPage: NextPage = () => {
+  const [currentPageNum, setCurrentPageNum] = useState(1);
+  const [limit, setLimit] = useState(5);
+  const [, setCreateLinkState] = useAtom(createLinkSetterAtom);
+  const [, setSpinnerState] = useAtom(loadingSpinnerSetterAtom);
   const {
     data: queryData,
     isFetching,
     isLoading,
     error,
-  } = trpc.link.getAll.useQuery();
-  const [, setCreateLinkState] = useAtom(createLinkSetterAtom);
-  const [, setSpinnerState] = useAtom(loadingSpinnerSetterAtom);
+    fetchNextPage,
+    refetch,
+  } = trpc.link.getInfinite.useInfiniteQuery(
+    { limit },
+    { getNextPageParam: (lastPage) => lastPage.nextCursor }
+  );
 
   function handleCreateLinkOpen() {
     setCreateLinkState({ isOpen: true });
   }
 
+  // show fetching status in top spinner
   useEffect(() => {
     setSpinnerState({ isLoading: isFetching });
     return () => {
@@ -42,10 +52,23 @@ const UserDashboardPage: NextPage = () => {
     };
   }, [isFetching, setSpinnerState]);
 
+  // fire an error-toast when query errors
   useEffect(() => {
     if (!error) return;
     toast.error(error.message);
   }, [error]);
+
+  // refetch current page
+  useEffect(() => {
+    refetch({ refetchPage: (_page, idx) => idx === currentPageNum - 1 });
+  }, [currentPageNum, refetch]);
+
+  // incrementally prefetch next pages
+  useEffect(() => {
+    const cursor = queryData?.pages[queryData.pages.length - 1]?.nextCursor;
+    if (!cursor) return;
+    fetchNextPage();
+  }, [fetchNextPage, queryData]);
 
   return (
     <MainLayout>
@@ -60,8 +83,8 @@ const UserDashboardPage: NextPage = () => {
       </div>
 
       {!isLoading && queryData && (
-        <ul className="mt-3 space-y-3 sm:mx-3 md:mx-12">
-          {queryData.map((shortLink) => (
+        <ul className="mt-3 space-y-3 text-zinc-100 sm:mx-3 md:mx-12">
+          {queryData.pages[currentPageNum - 1]?.items.map((shortLink) => (
             <ShortLinkItem key={shortLink.id} shortLink={shortLink} />
           ))}
         </ul>
@@ -79,11 +102,65 @@ const UserDashboardPage: NextPage = () => {
           ariaLabel="oval-loading"
         />
       </div>
+      <div className="flex items-center justify-center gap-2">
+        <ButtonSecondary
+          onClick={() => setCurrentPageNum((prev) => prev - 1)}
+          disabled={!(currentPageNum > 1)}
+        >
+          <ChevronLeftIcon className="h-6 w-6" />
+        </ButtonSecondary>
+        {(() => {
+          const pageNum = queryData?.pages.length;
+          const pageButtonS = [];
+          if (!pageNum) return;
+          for (let i = 1; i <= pageNum; i++) {
+            pageButtonS.push(
+              <PageButton
+                key={"pb" + i}
+                onClick={setCurrentPageNum}
+                value={i}
+                active={currentPageNum === i}
+              />
+            );
+          }
+          return pageButtonS;
+        })()}
+        <ButtonSecondary
+          onClick={() => setCurrentPageNum((prev) => prev + 1)}
+          disabled={
+            !(
+              queryData?.pages.length &&
+              currentPageNum < queryData?.pages.length
+            )
+          }
+        >
+          <ChevronRightIcon className="h-6 w-6" />
+        </ButtonSecondary>
+      </div>
     </MainLayout>
   );
 };
 
 export default UserDashboardPage;
+
+interface PageButtonProps {
+  onClick: (value: number) => void;
+  value: number;
+  active: boolean;
+}
+
+function PageButton({ onClick, value, active }: PageButtonProps) {
+  return (
+    <button
+      onClick={() => onClick(value)}
+      className={`rounded-lg px-2 py-1 hover:bg-white/10 ${
+        active ? "text-teal-300" : "text-zinc-500 hover:text-zinc-100"
+      }`}
+    >
+      {value}
+    </button>
+  );
+}
 
 export const getServerSideProps: GetServerSideProps = async (
   ctx: GetServerSidePropsContext

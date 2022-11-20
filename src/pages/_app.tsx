@@ -2,6 +2,7 @@ import type { AppType } from "next/app";
 import type { Session } from "next-auth";
 
 import { SessionProvider } from "next-auth/react";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 
 import { trpc } from "../utils/trpc";
@@ -19,6 +20,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         position="bottom-center"
         toastOptions={{ style: { color: "#f4f4f5", background: "#27272a" } }}
       />
+      {process.env.NODE_ENV !== "production" && <ReactQueryDevtools />}
     </SessionProvider>
   );
 };

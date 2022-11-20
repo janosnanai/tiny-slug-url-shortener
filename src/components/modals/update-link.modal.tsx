@@ -19,7 +19,7 @@ function UpdateLinkModal() {
   const { mutateAsync } = trpc.link.update.useMutation({
     onSuccess() {
       onClose();
-      utils.link.getAll.invalidate();
+      utils.link.getInfinite.invalidate();
     },
   });
 

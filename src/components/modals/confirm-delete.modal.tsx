@@ -22,7 +22,7 @@ function ConfirmDeleteModal() {
   const { mutateAsync } = trpc.link.delete.useMutation({
     onSuccess() {
       onClose();
-      utils.link.getAll.invalidate();
+      utils.link.getInfinite.invalidate();
     },
   });
 
