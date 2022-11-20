@@ -29,49 +29,29 @@ export const linkRouter = router({
     });
     return userLinks;
   }),
-  // OFFSET-BASED seems like trpc query dont accept it...
-  // getInfinite: protectedProcedure
-  //   .input(getInfiniteLinkSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     const { page, take } = input;
-  //     const skip = (page - 1) * take;
-  //     const userLinks = await ctx.prisma.shortLink.findMany({
-  //       where: {
-  //         creatorId: ctx.session.user.id,
-  //       },
-  //       skip,
-  //       take,
-  //     });
-  //     const userLinkCount = await ctx.prisma.shortLink.count({
-  //       where: {
-  //         creatorId: ctx.session.user.id,
-  //       },
-  //     });
-  //     const pageCount = Math.ceil(userLinkCount / take);
-  //     const prevPage = page > 1 ? page - 1 : null;
-  //     const nextPage = page < pageCount ? page + 1 : null;
-  //     return {
-  //       userLinks,
-  //       pages: {
-  //         count: pageCount,
-  //         prev: prevPage,
-  //         current: page,
-  //         next: nextPage,
-  //       },
-  //     };
-  //   }),
-
   // CURSOR-BASED
   getInfinite: protectedProcedure
     .input(getInfiniteLinkSchema)
     .query(async ({ ctx, input }) => {
       const limit = input.limit || 5;
-      const { cursor } = input;
+      const { cursor, filter, orderBy } = input;
       const items = await ctx.prisma.shortLink.findMany({
         take: limit + 1, // extra item is for next cursor
         where: {
           creatorId: ctx.session.user.id,
+          OR: [
+            {
+              url: { contains: filter },
+            },
+            {
+              slug: { contains: filter },
+            },
+            {
+              description: { contains: filter },
+            },
+          ],
         },
+        orderBy,
         cursor: cursor ? { id: cursor } : undefined,
       });
 

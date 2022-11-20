@@ -3,6 +3,7 @@ import type {
   GetServerSideProps,
   GetServerSidePropsContext,
 } from "next";
+import type { ChangeEvent, FormEvent } from "react";
 
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
@@ -11,6 +12,7 @@ import { toast } from "react-hot-toast";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
 import ButtonPrimary from "../../components/ui/button-primary";
+import ButtonSecondary from "../../components/ui/button-secondary";
 import MainLayout from "../../components/layouts/main.layout";
 import CreateLinkModal from "../../components/modals/create-link.modal";
 import UpdateLinkModal from "../../components/modals/update-link.modal";
@@ -21,10 +23,14 @@ import { createLinkSetterAtom } from "../../utils/atoms/create-link.atom";
 import { loadingSpinnerSetterAtom } from "../../utils/atoms/loading-spinner.atom";
 import { trpc } from "../../utils/trpc";
 import { getServerAuthSession } from "../../server/common/get-server-auth-session";
-import ButtonSecondary from "../../components/ui/button-secondary";
+import { useTimeout } from "../../utils/hooks/timeout.hook";
 
 const UserDashboardPage: NextPage = () => {
   const [currentPageNum, setCurrentPageNum] = useState(1);
+  const [filter, setFilter] = useState("");
+  const [orderBy, setOrderBy] = useState<{ updatedAt: "asc" | "desc" }>({
+    updatedAt: "asc",
+  });
   const [limit, setLimit] = useState(5);
   const [, setCreateLinkState] = useAtom(createLinkSetterAtom);
   const [, setSpinnerState] = useAtom(loadingSpinnerSetterAtom);
@@ -36,8 +42,15 @@ const UserDashboardPage: NextPage = () => {
     fetchNextPage,
     refetch,
   } = trpc.link.getInfinite.useInfiniteQuery(
-    { limit },
-    { getNextPageParam: (lastPage) => lastPage.nextCursor }
+    { limit, filter, orderBy },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+      // dial back current page num if its too big
+      onSuccess: ({ pages }) => {
+        if (currentPageNum <= pages.length) return;
+        setCurrentPageNum(pages.length);
+      },
+    }
   );
 
   function handleCreateLinkOpen() {
@@ -81,6 +94,7 @@ const UserDashboardPage: NextPage = () => {
           create new link
         </ButtonPrimary>
       </div>
+      <SearchBar onSearch={setFilter} />
 
       {!isLoading && queryData && (
         <ul className="mt-3 space-y-3 text-zinc-100 sm:mx-3 md:mx-12">
@@ -137,7 +151,9 @@ const UserDashboardPage: NextPage = () => {
               );
             } else if (i === 2 || i === maxPageNum - 1) {
               pageButtons.push(
-                <span className="px-2 py-1 text-zinc-400">...</span>
+                <span key={"pb" + i} className="px-2 py-1 text-zinc-400">
+                  ...
+                </span>
               );
             }
           }
@@ -177,6 +193,36 @@ function PageButton({ onClick, value, active }: PageButtonProps) {
     >
       {value}
     </button>
+  );
+}
+
+interface SearchBarProps {
+  onSearch: (value: string) => void;
+}
+
+function SearchBar({ onSearch }: SearchBarProps) {
+  const [searchInput, setSearchInput] = useState("");
+  const { startTimeout } = useTimeout(() => onSearch(searchInput));
+
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+    setSearchInput(e.target.value);
+    startTimeout();
+  }
+
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    onSearch(searchInput);
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        onChange={handleChange}
+        value={searchInput}
+        type="text"
+        className="border bg-zinc-800 font-semibold text-zinc-50"
+      />
+    </form>
   );
 }
 

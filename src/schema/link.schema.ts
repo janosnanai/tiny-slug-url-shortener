@@ -13,16 +13,6 @@ export const createLinkSchema = z.object({
 export const getSingleLinkSchema = z.object({
   id: z.string().cuid(),
 });
-
-// OFFSET-BASED pagination
-// export const getInfiniteLinkSchema = z.object({
-//   page: z.number().min(1, "Invalid page value."),
-//   take: z
-//     .number()
-//     .min(1, "Min take length is 1.")
-//     .max(20, "Max take length is 20."),
-// });
-
 // CURSOR-BASED pagination
 export const getInfiniteLinkSchema = z.object({
   limit: z
@@ -31,6 +21,8 @@ export const getInfiniteLinkSchema = z.object({
     .max(20, "Max take length is 20.")
     .nullish(),
   cursor: z.string().nullish(),
+  filter: z.string().optional(),
+  orderBy: z.object({ updatedAt: z.enum(["asc", "desc"]) }),
 });
 
 export const updateLinkSchema = z.object({
