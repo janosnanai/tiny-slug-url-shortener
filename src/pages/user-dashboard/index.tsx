@@ -116,7 +116,7 @@ const UserDashboardPage: NextPage = () => {
           ariaLabel="oval-loading"
         />
       </div>
-      <div className="my-5 flex items-center justify-center gap-2">
+      <div className="py-5 flex items-center justify-center gap-2">
         <ButtonSecondary
           onClick={() => setCurrentPageNum((prev) => prev - 1)}
           disabled={!(currentPageNum > 1)}
