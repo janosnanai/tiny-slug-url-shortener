@@ -102,7 +102,7 @@ const UserDashboardPage: NextPage = () => {
           ariaLabel="oval-loading"
         />
       </div>
-      <div className="flex items-center justify-center gap-2">
+      <div className="my-5 flex items-center justify-center gap-2">
         <ButtonSecondary
           onClick={() => setCurrentPageNum((prev) => prev - 1)}
           disabled={!(currentPageNum > 1)}
@@ -110,20 +110,38 @@ const UserDashboardPage: NextPage = () => {
           <ChevronLeftIcon className="h-6 w-6" />
         </ButtonSecondary>
         {(() => {
-          const pageNum = queryData?.pages.length;
-          const pageButtonS = [];
-          if (!pageNum) return;
-          for (let i = 1; i <= pageNum; i++) {
-            pageButtonS.push(
-              <PageButton
-                key={"pb" + i}
-                onClick={setCurrentPageNum}
-                value={i}
-                active={currentPageNum === i}
-              />
-            );
+          const maxPageNum = queryData?.pages.length;
+          const pageButtons = [];
+          if (!maxPageNum) return;
+          for (let i = 1; i <= maxPageNum; i++) {
+            if (
+              i === 1 ||
+              (i >= currentPageNum - 1 && i <= currentPageNum + 1) ||
+              (currentPageNum >= 1 &&
+                currentPageNum <= 4 &&
+                i >= 1 &&
+                i <= 5) ||
+              (currentPageNum <= maxPageNum &&
+                currentPageNum >= maxPageNum - 3 &&
+                i <= maxPageNum &&
+                i >= maxPageNum - 4) ||
+              i === maxPageNum
+            ) {
+              pageButtons.push(
+                <PageButton
+                  key={"pb" + i}
+                  onClick={setCurrentPageNum}
+                  value={i}
+                  active={currentPageNum === i}
+                />
+              );
+            } else if (i === 2 || i === maxPageNum - 1) {
+              pageButtons.push(
+                <span className="px-2 py-1 text-zinc-400">...</span>
+              );
+            }
           }
-          return pageButtonS;
+          return pageButtons;
         })()}
         <ButtonSecondary
           onClick={() => setCurrentPageNum((prev) => prev + 1)}
@@ -154,7 +172,7 @@ function PageButton({ onClick, value, active }: PageButtonProps) {
     <button
       onClick={() => onClick(value)}
       className={`rounded-lg px-2 py-1 hover:bg-white/10 ${
-        active ? "text-teal-300" : "text-zinc-500 hover:text-zinc-100"
+        active ? "text-teal-300" : "text-zinc-400 hover:text-zinc-100"
       }`}
     >
       {value}
