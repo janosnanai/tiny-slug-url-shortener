@@ -2,6 +2,7 @@ import type { ChangeEvent, FormEvent } from "react";
 
 import { useState } from "react";
 import { useAtom } from "jotai";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 import {
   filterGetterAtom,
@@ -27,12 +28,19 @@ function SearchBar() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        onChange={handleChange}
-        value={searchInput}
-        type="text"
-        className="border bg-zinc-800 font-semibold text-zinc-50"
-      />
+      <div className="flex items-center gap-1">
+        <label htmlFor="search-input">
+          <MagnifyingGlassIcon className="h-6 w-6 text-violet-500" />
+        </label>
+        <input
+          id="search-input"
+          onChange={handleChange}
+          value={searchInput}
+          type="text"
+          autoComplete="off"
+          className="rounded-lg bg-zinc-900 px-2 py-1 font-semibold text-teal-400"
+        />
+      </div>
     </form>
   );
 }

@@ -55,7 +55,7 @@ function ShortLinkItem({ shortLink }: { shortLink: ShortLink }) {
   }
 
   return (
-    <li className="mx-auto rounded-lg bg-zinc-900 p-2 mobile-lg:p-3 sm:container">
+    <li className="mx-auto w-full rounded-lg bg-zinc-900 p-2 mobile-lg:p-3">
       <div className="flex items-start justify-between gap-1">
         <p className="grow break-all text-base font-semibold text-zinc-100 mobile-lg:text-lg sm:text-xl">
           {shortLinkFull}

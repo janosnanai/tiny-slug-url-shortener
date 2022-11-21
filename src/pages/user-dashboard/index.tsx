@@ -97,42 +97,48 @@ const UserDashboardPage: NextPage = () => {
   }, [fetchNextPage, queryData]);
 
   return (
-    <MainLayout>
+    <>
+      <MainLayout>
+        <div className="mx-auto sm:container">
+          <div className="flex justify-between sm:mx-3 md:mx-12">
+            <div className="flex items-center gap-3">
+              <SearchBar />
+              <SortSwitch />
+              <SortSelect />
+              <LimitSelect />
+            </div>
+            <ButtonPrimary onClick={handleCreateLinkOpen}>
+              create new link
+            </ButtonPrimary>
+          </div>
+          {!isLoading && queryData && (
+            <ul className="mt-3 space-y-3 text-zinc-100 sm:mx-3 md:mx-12">
+              {queryData.pages[currentPageNum - 1]?.items.map((shortLink) => (
+                <ShortLinkItem key={shortLink.id} shortLink={shortLink} />
+              ))}
+            </ul>
+          )}
+
+          <div>
+            <Oval
+              visible={isLoading}
+              wrapperClass="justify-center mt-10"
+              strokeWidth={5}
+              height={72}
+              width={72}
+              color="#2dd4bf"
+              secondaryColor="#2dd4bf"
+              ariaLabel="oval-loading"
+            />
+          </div>
+          <Pagination maxPageNum={queryData?.pages.length} />
+        </div>
+      </MainLayout>
       <CreateLinkModal />
       <UpdateLinkModal />
       <ConfirmDeleteModal />
       <QrCodeModal />
-      <div className="mx-auto my-3 w-max">
-        <ButtonPrimary onClick={handleCreateLinkOpen}>
-          create new link
-        </ButtonPrimary>
-      </div>
-      <SearchBar />
-      <SortSelect />
-      <SortSwitch />
-      <LimitSelect />
-      {!isLoading && queryData && (
-        <ul className="mt-3 space-y-3 text-zinc-100 sm:mx-3 md:mx-12">
-          {queryData.pages[currentPageNum - 1]?.items.map((shortLink) => (
-            <ShortLinkItem key={shortLink.id} shortLink={shortLink} />
-          ))}
-        </ul>
-      )}
-
-      <div>
-        <Oval
-          visible={isLoading}
-          wrapperClass="justify-center mt-10"
-          strokeWidth={5}
-          height={72}
-          width={72}
-          color="#2dd4bf"
-          secondaryColor="#2dd4bf"
-          ariaLabel="oval-loading"
-        />
-      </div>
-      <Pagination maxPageNum={queryData?.pages.length} />
-    </MainLayout>
+    </>
   );
 };
 

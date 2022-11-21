@@ -19,7 +19,7 @@ function SortSwitch() {
     <Switch
       checked={sortOrder === SortOrderOptions.ASC}
       onChange={toggleSortOrder}
-      className="text-zinc-100"
+      className="rounded-full p-1 text-teal-400 transition-colors hover:bg-white/10"
     >
       {sortOrder === SortOrderOptions.ASC && (
         <BarsArrowUpIcon className="h-6 w-6" />
