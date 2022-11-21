@@ -3,7 +3,6 @@ import type {
   GetServerSideProps,
   GetServerSidePropsContext,
 } from "next";
-import type { ChangeEvent, FormEvent } from "react";
 
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
@@ -11,17 +10,19 @@ import { Oval } from "react-loader-spinner";
 import { toast } from "react-hot-toast";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
+import MainLayout from "../../components/layouts/main.layout";
+import SearchBar from "../../components/ui/search-bar";
 import LimitSelect from "../../components/ui/limit-select";
 import SortSelect from "../../components/ui/sort-select";
 import SortSwitch from "../../components/ui/sort-switch";
 import ButtonPrimary from "../../components/ui/button-primary";
 import ButtonSecondary from "../../components/ui/button-secondary";
-import MainLayout from "../../components/layouts/main.layout";
+import ShortLinkItem from "../../components/short-links/short-link-item";
+
 import CreateLinkModal from "../../components/modals/create-link.modal";
 import UpdateLinkModal from "../../components/modals/update-link.modal";
 import ConfirmDeleteModal from "../../components/modals/confirm-delete.modal";
 import QrCodeModal from "../../components/modals/qr-code.modal";
-import ShortLinkItem from "../../components/short-links/short-link-item";
 
 import { createLinkSetterAtom } from "../../utils/atoms/create-link.atom";
 import { loadingSpinnerSetterAtom } from "../../utils/atoms/loading-spinner.atom";
@@ -30,11 +31,11 @@ import { sortCompositeGetterAtom } from "../../utils/atoms/sort-select.atom";
 
 import { trpc } from "../../utils/trpc";
 import { getServerAuthSession } from "../../server/common/get-server-auth-session";
-import { useTimeout } from "../../utils/hooks/timeout.hook";
+import { filterGetterAtom } from "../../utils/atoms/filter.atom";
 
 const UserDashboardPage: NextPage = () => {
   const [currentPageNum, setCurrentPageNum] = useState(1);
-  const [filter, setFilter] = useState("");
+  const [filter] = useAtom(filterGetterAtom);
   const [limit] = useAtom(limitGetterAtom);
   const [orderBy] = useAtom(sortCompositeGetterAtom);
   const [, setCreateLinkState] = useAtom(createLinkSetterAtom);
@@ -102,7 +103,7 @@ const UserDashboardPage: NextPage = () => {
           create new link
         </ButtonPrimary>
       </div>
-      <SearchBar onSearch={setFilter} />
+      <SearchBar />
       <SortSelect />
       <SortSwitch />
       <LimitSelect />
@@ -206,38 +207,6 @@ function PageButton({ onClick, value, active }: PageButtonProps) {
     </button>
   );
 }
-
-interface SearchBarProps {
-  onSearch: (value: string) => void;
-}
-
-function SearchBar({ onSearch }: SearchBarProps) {
-  const [searchInput, setSearchInput] = useState("");
-  const { startTimeout } = useTimeout(() => onSearch(searchInput));
-
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
-    setSearchInput(e.target.value);
-    startTimeout();
-  }
-
-  function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    onSearch(searchInput);
-  }
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <input
-        onChange={handleChange}
-        value={searchInput}
-        type="text"
-        className="border bg-zinc-800 font-semibold text-zinc-50"
-      />
-    </form>
-  );
-}
-
-// TODO: asc/desc switch, limit selector
 
 export const getServerSideProps: GetServerSideProps = async (
   ctx: GetServerSidePropsContext
