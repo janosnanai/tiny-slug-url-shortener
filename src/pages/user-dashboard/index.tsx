@@ -11,6 +11,9 @@ import { Oval } from "react-loader-spinner";
 import { toast } from "react-hot-toast";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
+import LimitSelect from "../../components/ui/limit-select";
+import SortSelect from "../../components/ui/sort-select";
+import SortSwitch from "../../components/ui/sort-switch";
 import ButtonPrimary from "../../components/ui/button-primary";
 import ButtonSecondary from "../../components/ui/button-secondary";
 import MainLayout from "../../components/layouts/main.layout";
@@ -19,8 +22,12 @@ import UpdateLinkModal from "../../components/modals/update-link.modal";
 import ConfirmDeleteModal from "../../components/modals/confirm-delete.modal";
 import QrCodeModal from "../../components/modals/qr-code.modal";
 import ShortLinkItem from "../../components/short-links/short-link-item";
+
 import { createLinkSetterAtom } from "../../utils/atoms/create-link.atom";
 import { loadingSpinnerSetterAtom } from "../../utils/atoms/loading-spinner.atom";
+import { limitGetterAtom } from "../../utils/atoms/limit.atom";
+import { sortCompositeGetterAtom } from "../../utils/atoms/sort-select.atom";
+
 import { trpc } from "../../utils/trpc";
 import { getServerAuthSession } from "../../server/common/get-server-auth-session";
 import { useTimeout } from "../../utils/hooks/timeout.hook";
@@ -28,10 +35,8 @@ import { useTimeout } from "../../utils/hooks/timeout.hook";
 const UserDashboardPage: NextPage = () => {
   const [currentPageNum, setCurrentPageNum] = useState(1);
   const [filter, setFilter] = useState("");
-  const [orderBy, setOrderBy] = useState<{ updatedAt: "asc" | "desc" }>({
-    updatedAt: "asc",
-  });
-  const [limit, setLimit] = useState(5);
+  const [limit] = useAtom(limitGetterAtom);
+  const [orderBy] = useAtom(sortCompositeGetterAtom);
   const [, setCreateLinkState] = useAtom(createLinkSetterAtom);
   const [, setSpinnerState] = useAtom(loadingSpinnerSetterAtom);
   const {
@@ -42,6 +47,9 @@ const UserDashboardPage: NextPage = () => {
     fetchNextPage,
     refetch,
   } = trpc.link.getInfinite.useInfiniteQuery(
+    // something funky, only ts-parsing maybe?
+    // eslint-disable-next-line
+    // @ts-ignore
     { limit, filter, orderBy },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
@@ -95,7 +103,10 @@ const UserDashboardPage: NextPage = () => {
         </ButtonPrimary>
       </div>
       <SearchBar onSearch={setFilter} />
-
+      <SortSelect />
+      <SortSwitch />
+      <LimitSelect />
+      <div className="text-sky-400">{JSON.stringify(orderBy)}</div>
       {!isLoading && queryData && (
         <ul className="mt-3 space-y-3 text-zinc-100 sm:mx-3 md:mx-12">
           {queryData.pages[currentPageNum - 1]?.items.map((shortLink) => (
@@ -116,7 +127,7 @@ const UserDashboardPage: NextPage = () => {
           ariaLabel="oval-loading"
         />
       </div>
-      <div className="py-5 flex items-center justify-center gap-2">
+      <div className="flex items-center justify-center gap-2 py-5">
         <ButtonSecondary
           onClick={() => setCurrentPageNum((prev) => prev - 1)}
           disabled={!(currentPageNum > 1)}
@@ -225,6 +236,8 @@ function SearchBar({ onSearch }: SearchBarProps) {
     </form>
   );
 }
+
+// TODO: asc/desc switch, limit selector
 
 export const getServerSideProps: GetServerSideProps = async (
   ctx: GetServerSidePropsContext

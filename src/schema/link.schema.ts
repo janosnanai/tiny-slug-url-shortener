@@ -22,7 +22,9 @@ export const getInfiniteLinkSchema = z.object({
     .nullish(),
   cursor: z.string().nullish(),
   filter: z.string().optional(),
-  orderBy: z.object({ updatedAt: z.enum(["asc", "desc"]) }),
+  orderBy: z
+    .object({ createdAt: z.enum(["asc", "desc"]) })
+    .or(z.object({ updatedAt: z.enum(["asc", "desc"]) })),
 });
 
 export const updateLinkSchema = z.object({
