@@ -99,7 +99,7 @@ const UserDashboardPage: NextPage = () => {
   return (
     <>
       <MainLayout>
-        <div className="mx-auto sm:container">
+        <div className="mx-auto p-3 sm:container">
           <div className="flex justify-between sm:mx-3 md:mx-12">
             <div className="flex items-center gap-3">
               <SearchBar />
@@ -112,17 +112,22 @@ const UserDashboardPage: NextPage = () => {
             </ButtonPrimary>
           </div>
           {!isLoading && queryData && (
-            <ul className="mt-3 space-y-3 text-zinc-100 sm:mx-3 md:mx-12">
+            <ul className="mt-3 space-y-3 sm:mx-3 md:mx-12">
               {queryData.pages[currentPageNum - 1]?.items.map((shortLink) => (
                 <ShortLinkItem key={shortLink.id} shortLink={shortLink} />
               ))}
             </ul>
           )}
+          {!isLoading && !queryData?.pages[currentPageNum - 1]?.items.length && (
+            <div className="my-20 text-center text-zinc-100">
+              <p>no links to show</p>
+            </div>
+          )}
 
           <div>
             <Oval
               visible={isLoading}
-              wrapperClass="justify-center mt-10"
+              wrapperClass="justify-center my-20"
               strokeWidth={5}
               height={72}
               width={72}
