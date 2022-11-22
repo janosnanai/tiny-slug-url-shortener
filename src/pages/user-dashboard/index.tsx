@@ -10,11 +10,8 @@ import { Oval } from "react-loader-spinner";
 import { toast } from "react-hot-toast";
 
 import MainLayout from "../../components/layouts/main.layout";
-import SearchBar from "../../components/ui/search-bar";
-import LimitSelect from "../../components/ui/limit-select";
-import SortSelect from "../../components/ui/sort-select";
-import SortSwitch from "../../components/ui/sort-switch";
-import ButtonPrimary from "../../components/ui/button-primary";
+import SearchBar from "../../components/search-bar/search-bar";
+import ButtonPrimary from "../../components/common/ui/button-primary";
 import ShortLinkItem from "../../components/short-links/short-link-item";
 import Pagination from "../../components/pagination/pagination";
 
@@ -100,13 +97,8 @@ const UserDashboardPage: NextPage = () => {
     <>
       <MainLayout>
         <div className="mx-auto p-3 sm:container">
-          <div className="flex justify-between sm:mx-3 md:mx-12">
-            <div className="flex items-center gap-3">
-              <SearchBar />
-              <SortSwitch />
-              <SortSelect />
-              <LimitSelect />
-            </div>
+          <div className="flex flex-col-reverse justify-between gap-3 sm:mx-3 sm:flex-row md:mx-12">
+            <SearchBar />
             <ButtonPrimary onClick={handleCreateLinkOpen}>
               create new link
             </ButtonPrimary>

@@ -2,7 +2,7 @@ import type { CreateLinkInput } from "../../schema/link.schema";
 
 import { useAtom } from "jotai";
 
-import FormModal from "./form.modal";
+import FormModal from "../common/form-modal";
 import {
   updateLinkGetterAtom,
   updateLinkSetterAtom,

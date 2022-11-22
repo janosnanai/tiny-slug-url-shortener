@@ -6,7 +6,7 @@ import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 
-import ButtonPrimary from "../components/ui/button-primary";
+import ButtonPrimary from "../components/common/ui/button-primary";
 import MainLayout from "../components/layouts/main.layout";
 
 import garyPic from "../../public/gary.svg";

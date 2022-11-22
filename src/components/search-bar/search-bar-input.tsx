@@ -10,7 +10,7 @@ import {
 } from "../../utils/atoms/filter.atom";
 import { useTimeout } from "../../utils/hooks/timeout.hook";
 
-function SearchBar() {
+function SearchBarInput() {
   const [filter] = useAtom(filterGetterAtom);
   const [, setFilter] = useAtom(filterSetterAtom);
   const [searchInput, setSearchInput] = useState(filter);
@@ -38,11 +38,11 @@ function SearchBar() {
           value={searchInput}
           type="text"
           autoComplete="off"
-          className="rounded-lg bg-zinc-900 px-2 py-1 font-semibold text-teal-400"
+          className="w-60 rounded-lg bg-zinc-900 px-2 py-1 font-semibold text-teal-400"
         />
       </div>
     </form>
   );
 }
 
-export default SearchBar;
+export default SearchBarInput;

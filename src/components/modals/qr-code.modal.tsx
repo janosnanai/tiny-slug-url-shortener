@@ -9,7 +9,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { toast } from "react-hot-toast";
 
-import ButtonPrimary from "../ui/button-primary";
+import ButtonPrimary from "../common/ui/button-primary";
 import {
   qrCodeModalGetterAtom,
   qrCodeModalSetterAtom,

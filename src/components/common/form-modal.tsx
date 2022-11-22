@@ -7,8 +7,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
-import ButtonPrimary from "../ui/button-primary";
-import ButtonSecondary from "../ui/button-secondary";
+import ButtonPrimary from "../common/ui/button-primary";
+import ButtonSecondary from "../common/ui/button-secondary";
 import { createLinkSchema } from "../../schema/link.schema";
 import { env } from "../../env/client.mjs";
 

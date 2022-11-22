@@ -28,7 +28,7 @@ function LimitSelect() {
     <Listbox value={limit} onChange={setLimit}>
       {({ open }) => (
         <>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 text-sm">
             <span className="select-none uppercase text-violet-500">
               page size:
             </span>

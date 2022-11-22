@@ -4,8 +4,8 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useAtom } from "jotai";
 import { toast } from "react-hot-toast";
 
-import ButtonPrimary from "../ui/button-primary";
-import ButtonDanger from "../ui/button-danger";
+import ButtonPrimary from "../common/ui/button-primary";
+import ButtonDanger from "../common/ui/button-danger";
 import {
   deleteLinkGetterAtom,
   deleteLinkSetterAtom,

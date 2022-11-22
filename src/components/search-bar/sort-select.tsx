@@ -30,7 +30,7 @@ function SortSelect() {
     <Listbox value={sortBy} onChange={setSortBy}>
       {({ open }) => (
         <>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 text-sm">
             <span className="select-none uppercase text-violet-500">
               sort by:
             </span>

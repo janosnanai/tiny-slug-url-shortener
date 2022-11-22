@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
-import ButtonSecondary from "../ui/button-secondary";
+import ButtonSecondary from "../common/ui/button-secondary";
 import PageButton from "./pagination-page-button";
 
 import {
