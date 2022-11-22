@@ -38,7 +38,7 @@ function SearchBarInput() {
           value={searchInput}
           type="text"
           autoComplete="off"
-          className="w-60 rounded-lg bg-zinc-900 px-2 py-1 font-semibold text-teal-400"
+          className="w-full rounded-lg bg-zinc-900 px-2 py-1 text-sm font-semibold text-teal-400 mobile-md:w-60 mobile-md:text-base"
         />
       </div>
     </form>

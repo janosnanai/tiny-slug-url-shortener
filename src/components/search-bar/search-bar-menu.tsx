@@ -44,12 +44,12 @@ function SearchBarMenu() {
               top: y ?? 0,
               left: x ?? 0,
             }}
-            className="z-10 flex items-center gap-2 rounded-lg border border-zinc-700 bg-zinc-800 p-2 shadow-lg"
+            className="z-10 flex w-52 flex-col items-start justify-center gap-3 rounded-lg border border-zinc-700 bg-zinc-800 p-2 shadow-lg sm:w-[27rem] sm:flex-row sm:items-center"
           >
             <SortSwitch />
-            <div className="h-7 w-[2px] rounded-full bg-white/30" />
+            <div className="h-0.5 w-full rounded-full bg-white/30 sm:h-7 sm:w-0.5" />
             <SortSelect />
-            <div className="h-7 w-[2px] rounded-full bg-white/30" />
+            <div className="h-0.5 w-full rounded-full bg-white/30 sm:h-7 sm:w-0.5" />
             <LimitSelect />
           </Popover.Panel>
         </>

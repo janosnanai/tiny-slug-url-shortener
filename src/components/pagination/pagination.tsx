@@ -14,7 +14,7 @@ function Pagination({ maxPageNum }: { maxPageNum?: number }) {
   const [, setCurrentPageNum] = useAtom(currentPageNumSetterAtom);
 
   return (
-    <div className="flex items-center justify-center gap-2 py-5">
+    <div className="flex items-center justify-center gap-0.5 py-5 mobile-md:gap-2">
       <ButtonSecondary
         onClick={() => setCurrentPageNum(currentPageNum - 1)}
         disabled={!(currentPageNum > 1)}
@@ -45,7 +45,7 @@ function Pagination({ maxPageNum }: { maxPageNum?: number }) {
             );
           } else if (i === 2 || i === maxPageNum - 1) {
             pageButtons.push(
-              <span key={"pb" + i} className="px-2 py-1 text-zinc-400">
+              <span key={"pb" + i} className="py-1 text-zinc-400">
                 ...
               </span>
             );
