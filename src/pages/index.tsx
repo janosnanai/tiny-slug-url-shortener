@@ -16,9 +16,11 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>tinySlug</title>
-        <meta name="description" content="url shortener" />
-        <link rel="icon" href="/gary.svg" />
+        <title>TinySlug - Home</title>
+        <meta
+          name="description"
+          content="Free, unlimited custom links & QR codes."
+        />
       </Head>
       <MainLayout>
         <h1 className="mx-auto w-max bg-gradient-to-r from-lime-500 via-teal-500 to-indigo-500 bg-clip-text p-2 text-center text-xl font-bold tracking-tight text-transparent mobile-md:text-2xl mobile-lg:text-3xl sm:mb-14 sm:text-4xl">

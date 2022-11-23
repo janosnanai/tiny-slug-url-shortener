@@ -4,6 +4,7 @@ import type {
   GetServerSidePropsContext,
 } from "next";
 
+import Head from "next/head";
 import { useAtom } from "jotai";
 import { useEffect } from "react";
 import { Oval } from "react-loader-spinner";
@@ -95,6 +96,10 @@ const UserDashboardPage: NextPage = () => {
 
   return (
     <>
+      <Head>
+        <title>TinySlug - Dashboard</title>
+        <meta name="description" content="Manage your short-links." />
+      </Head>
       <MainLayout>
         <div className="mx-auto p-3 sm:container">
           <div className="flex flex-col-reverse justify-between gap-3 sm:mx-3 sm:flex-row md:mx-12">
