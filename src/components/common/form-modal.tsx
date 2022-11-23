@@ -13,8 +13,10 @@ import { createLinkSchema } from "../../schema/link.schema";
 import { env } from "../../env/client.mjs";
 
 const BASE_URL = `${
-  process.env.NODE_ENV === "development" ? "http://" : "https://"
-}${env.NEXT_PUBLIC_VERCEL_URL}/s/`;
+  process.env.NODE_ENV === "development"
+    ? "http://" + env.NEXT_PUBLIC_VERCEL_URL
+    : "https://tsus.vercel.app"
+}/s/`;
 
 interface FormModalProps {
   isOpen: boolean;
