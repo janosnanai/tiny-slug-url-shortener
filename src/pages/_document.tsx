@@ -5,7 +5,7 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <link rel="icon" href="/gary.svg" />
+          <link rel="icon" href="/gary.webp" />
         </Head>
         <body>
           <Main />

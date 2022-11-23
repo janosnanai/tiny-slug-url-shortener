@@ -9,7 +9,7 @@ import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import ButtonPrimary from "../components/common/ui/button-primary";
 import MainLayout from "../components/layouts/main.layout";
 
-import garyPic from "../../public/gary.svg";
+import garyPic from "../../public/gary.webp";
 
 const Home: NextPage = () => {
   const { data: sessionData } = useSession();
@@ -56,7 +56,7 @@ const Home: NextPage = () => {
           <Image
             src={garyPic}
             alt="picture of gary the slug"
-            className="mr-12 h-48 w-48"
+            className="mr-12 w-48"
           />
           <div className="relative mb-4 rounded-lg bg-zinc-900 p-5 shadow before:absolute before:bottom-0 before:left-2/3 before:h-6 before:w-6 before:translate-y-1/2 before:rotate-45 before:bg-zinc-900 mobile-lg:p-7 sm:before:bottom-1/3 sm:before:left-0 sm:before:-translate-x-1/2">
             <h2 className="max-w-[9rem] text-center text-xl font-semibold tracking-wide text-zinc-400 mobile-lg:max-w-[12rem] mobile-lg:text-2xl">
