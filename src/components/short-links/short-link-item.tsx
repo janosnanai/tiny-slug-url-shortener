@@ -11,8 +11,10 @@ import { toast } from "react-hot-toast";
 
 function ShortLinkItem({ shortLink }: { shortLink: ShortLink }) {
   const shortLinkFull = `${
-    process.env.NODE_ENV === "development" ? "http://" : "https://"
-  }${env.NEXT_PUBLIC_VERCEL_URL}/s/${shortLink.slug}`;
+    process.env.NODE_ENV === "development"
+      ? "http://" + env.NEXT_PUBLIC_VERCEL_URL
+      : "https://tsus.vercel.app"
+  }/s/${shortLink.slug}`;
 
   const [, setQrCodeModalState] = useAtom(qrCodeModalSetterAtom);
   const [, setUpdateModalState] = useAtom(updateLinkSetterAtom);
