@@ -3,6 +3,7 @@ import type { NextPage } from "next";
 import Image from "next/image";
 import Head from "next/head";
 import Link from "next/link";
+import { Oval } from "react-loader-spinner";
 import { signIn, useSession } from "next-auth/react";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 
@@ -12,7 +13,7 @@ import MainLayout from "../components/layouts/main.layout";
 import garyPic from "../../public/gary.webp";
 
 const Home: NextPage = () => {
-  const { data: sessionData } = useSession();
+  const { status: sessionStatus } = useSession();
   return (
     <>
       <Head>
@@ -62,7 +63,7 @@ const Home: NextPage = () => {
             <h2 className="max-w-[9rem] text-center text-xl font-semibold tracking-wide text-zinc-400 mobile-lg:max-w-[12rem] mobile-lg:text-2xl">
               Free, unlimited custom links & QR codes.
             </h2>
-            {sessionData && (
+            {sessionStatus === "authenticated" && (
               <Link
                 href={`/user-dashboard`}
                 className="group relative mx-auto mt-5 block w-max rounded-lg border-2 border-pink-600 bg-pink-600 px-3 py-1 text-center text-base font-semibold uppercase text-pink-100 transition duration-300 ease-out hover:bg-transparent mobile-lg:px-5 mobile-lg:py-2 mobile-lg:text-lg"
@@ -74,16 +75,35 @@ const Home: NextPage = () => {
                 <span className="absolute inset-0 h-full w-full animate-pulse rounded-lg bg-transparent shadow-[0_2px_17px_5px] shadow-pink-600/50 group-hover:animate-none" />
               </Link>
             )}
-            {!sessionData && (
+            {sessionStatus !== "authenticated" && (
               <ButtonPrimary
-                className="group relative mx-auto mt-5 block w-max"
+                className="group relative mx-auto mt-5 block w-full"
                 onClick={signIn}
+                disabled={sessionStatus === "loading"}
               >
-                <div className="flex items-center justify-between gap-2">
-                  <span>sign in</span>
-                  <ArrowRightIcon className="h-5 w-5 transition-transform duration-300 ease-in-out group-hover:translate-x-1.5 mobile-lg:h-6 mobile-lg:w-6 mobile-lg:group-hover:translate-x-2" />
-                </div>
-                <span className="absolute inset-0 h-full w-full animate-pulse rounded-lg bg-transparent shadow-[0_2px_17px_5px] shadow-pink-600/50 group-hover:animate-none" />
+                {sessionStatus === "unauthenticated" && (
+                  <>
+                    <div className="flex items-center justify-center gap-2">
+                      <span>sign in</span>
+                      <ArrowRightIcon className="h-5 w-5 transition-transform duration-300 ease-in-out group-hover:translate-x-1.5 mobile-lg:h-6 mobile-lg:w-6 mobile-lg:group-hover:translate-x-2" />
+                    </div>
+                    <span className="absolute inset-0 h-full w-full animate-pulse rounded-lg bg-transparent shadow-[0_2px_17px_5px] shadow-pink-600/50 group-hover:animate-none" />
+                  </>
+                )}
+                {sessionStatus === "loading" && (
+                  <div className="flex items-center justify-center gap-2">
+                    <Oval
+                      visible={sessionStatus === "loading"}
+                      strokeWidth={5}
+                      height={20}
+                      width={20}
+                      color="#2dd4bf"
+                      secondaryColor="#2dd4bf"
+                      ariaLabel="oval-loading"
+                    />
+                    <span>loading...</span>
+                  </div>
+                )}
               </ButtonPrimary>
             )}
           </div>

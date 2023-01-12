@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Oval } from "react-loader-spinner";
 import { signIn, signOut, useSession } from "next-auth/react";
 import {
   ArrowLeftOnRectangleIcon,
@@ -20,7 +21,7 @@ import MenuItemButton from "../common/menu-item-button";
 import MenuItemLink from "../common/menu-item-link";
 
 function NavbarMenu() {
-  const { data: sessionData } = useSession();
+  const { data: sessionData, status: sessionStatus } = useSession();
   const { x, y, reference, floating, strategy } = useFloating({
     placement: "bottom",
     strategy: "absolute",
@@ -35,13 +36,14 @@ function NavbarMenu() {
           <Menu.Button
             ref={reference}
             className="group relative rounded-full p-1 transition-colors hover:bg-white/10"
+            disabled={sessionStatus === "loading"}
           >
             <div
               className={`rounded-full outline outline-2 outline-offset-2 transition-colors ${
                 open ? "outline-teal-300/50" : "outline-transparent"
               }`}
             >
-              {sessionData && (
+              {sessionStatus === "authenticated" && (
                 <Image
                   src={sessionData?.user?.image || ""}
                   width={24}
@@ -50,14 +52,29 @@ function NavbarMenu() {
                   className="rounded-full"
                 />
               )}
-              {!sessionData && <UserIcon className="h-6 w-6 text-zinc-200" />}
-              <ChevronDownIcon
-                className={`absolute bottom-0 right-0 h-3 w-3 rounded-full bg-zinc-900 transition-colors ${
-                  open
-                    ? "text-teal-300"
-                    : "text-zinc-200 group-hover:text-zinc-50"
-                }`}
-              />
+              {sessionStatus === "unauthenticated" && (
+                <UserIcon className="h-6 w-6 text-zinc-200" />
+              )}
+              {sessionStatus === "loading" && (
+                <Oval
+                  visible={sessionStatus === "loading"}
+                  strokeWidth={5}
+                  height={16}
+                  width={16}
+                  color="#2dd4bf"
+                  secondaryColor="#2dd4bf"
+                  ariaLabel="oval-loading"
+                />
+              )}
+              {sessionStatus !== "loading" && (
+                <ChevronDownIcon
+                  className={`absolute bottom-0 right-0 h-3 w-3 rounded-full bg-zinc-900 transition-colors ${
+                    open
+                      ? "text-teal-300"
+                      : "text-zinc-200 group-hover:text-zinc-50"
+                  }`}
+                />
+              )}
             </div>
           </Menu.Button>
           <Menu.Items
